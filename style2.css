@@ -1,0 +1,223 @@
+body { font-family: 'Catamaran', sans-serif; margin:0; padding:0; }
+.container { max-width:700px; margin:auto; padding:20px; }
+.card { background:#fff; padding:20px; border-radius:12px; margin-bottom:20px; }
+h1,h3 { text-align:center; }
+.product-entry { border:1px solid #ccc; padding:12px; border-radius:8px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px; }
+.button-wrapper { display:flex; justify-content:center; gap:8px; }
+button { padding:6px 12px; cursor:pointer; }
+a { text-decoration:none; }
+
+#titleprt {font-family: 'Paytone One', sans-serif;
+  color: #EF5B9C;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Modal */
+#modalOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; }
+#modalContent { background:#fff; padding:20px; border-radius:12px; width:90%; max-width:500px; }
+#modalContent h3 { text-align:center; margin-top:0; }
+#modalContent p { margin:5px 0; }
+
+/* Repurchase bar */
+.repurchase-bar { background:#eee; width:100%; height:12px; border-radius:6px; overflow:hidden; margin-top:4px; }
+.repurchase-fill { background:green; height:12px; border-radius:6px 0 0 6px; transition: width 0.3s ease; }
+/* =========================
+   Reset and Base Styles
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body setup for full-screen flex centering */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Catamaran', sans-serif;
+  background-image: url('images/Hair Hub Background-2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* horizontal centering */
+  justify-content: center; /* natural top alignment like other cards */
+  padding: 20px;
+}
+
+
+button, input, textarea {
+  max-width: 100%;
+  font-family: 'Catamaran', sans-serif;
+}
+
+button {
+  padding: 6px 12px;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #6E9AC4;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #FFE865;
+}
+
+
+h1, h2 {
+  font-family: 'Paytone One', sans-serif;
+  color: #EF5B9C;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h1 { font-size: 26px; margin-top: 20px; }
+h2 { font-size: 18px; }
+
+
+.card{
+  background-color: #FFFFFF;
+  color: #344354;
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 420px;         /* slightly larger than 350 so forms don't wrap oddly */
+  margin: 0 auto 20px auto; /* center & space underneath for results */
+  box-sizing: border-box;
+}
+
+#savedProductstitle{ font-size: 20px; color: #6E9AC4; text-align: center; margin-bottom: 10px;}
+#formTitle{margin-bottom: 30px;}
+
+.home-icon {
+  position: fixed;  /* fixed keeps it in the corner, not relative to card */
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-svg {
+  width: 25px;
+  height: 25px;
+  fill: #EF5B9C;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.home-svg:hover { fill: #FFE865; }
+
+/* =========================
+   Media Queries (Mobile First)
+========================= */
+
+@media (max-width: 768px) {
+
+  /* Make card flow naturally on mobile */
+  @media (max-width: 768px) {
+  .card,
+  .card2,
+  .maincard{
+    width: 90%;           /* matches other cards */
+    max-width: 420px;     /* same as other cards */
+    margin: 20px auto;    /* horizontal centering */
+    padding-top: 20px;    /* reduce vertical padding */
+    padding-bottom: 20px;
+    box-sizing: border-box;
+  }
+
+  .question input {
+  font-size: 12px;
+  width: 150px;
+  text-align: center;
+}
+.question{
+  font-size: 14px;
+}
+.question select {
+  font-size: 12px; /* adjust as needed */
+  text-align: center;
+}
+
+}
+
+ body{ background-size: cover; background-position: 80% 50%;}
+
+
+  /* Make results boxes appear below the card */
+  #displayInfo, #calculationResult,
+  #displayInfo2, #calculationResult2 {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 90%;
+    margin: 5px auto;   /* spacing below the card */
+    visibility: hidden;
+  }
+
+  /* Adjust fonts and buttons */
+  h1 { font-size: 22px; margin-top: 20px; }
+  h2 { font-size: 18px; }
+  p, .description-text { font-size: 14px; }
+  button { font-size: 14px; padding: 10px 20px; }
+  #growthRate, #desiredGrowth {font-size: 14px;} 
+}
+
+@media (max-width: 430px) {
+  .home-icon { transform: scale(0.85); right: 6px; }
+}
+
+
+@media (max-width: 768px) {
+  .calculator-wrapper {
+    width: 100%;
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    justify-content: flex-start;
+    padding-top: 40px;
+    min-height: 100vh;
+  }
+}
+
+
+/* Desktop layout stabilizer */
+@media (min-width: 769px) {
+  .container {
+    justify-content: center;   /* keep card centered vertically */
+    min-height: 100vh;         /* stop layout jump */
+    padding-top: 0;
+  }
+}
+

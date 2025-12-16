@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hair Goal Tracker</title>
+  <link rel="stylesheet" href="style1.css">
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;700&family=Paytone+One&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+ <div class="cardhairgoals">
+    <a href="index.html" class="home-icon" title="Go Home">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="home-svg">
+        <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z" />
+    </svg>
+    </a>
+  <h1 class="goal-tracker">Hair Goals Tracker</h1>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div id="currentTab" class="tab active">Current Goals</div>
+    <div id="historyTab" class="tab">Goal History</div>
+  </div>
+
+  <!-- Create Goal Form -->
+  <div id="currentGoals">
+    <h3 class="yourcurrentgoals">Create a New Goal</h3>
+    <input id="goalTitle" placeholder="What is your goal? " />
+    <div class="date-wrapper">
+    <small class="targetdatelabel"> Target Date: </small>
+    <input class="targetdateentry" type="date" id="goalDate" />
+  
+    </div>
+    <div><button class="addgoalbutton" onclick="addGoal()">Add Goal</button></div>
+    
+
+    <h3 class="yourcurrentgoals" style="margin-top:30px;">Your Current Goals</h3>
+    <div id="goalList"></div>
+  </div>
+
+  <!-- History Tab -->
+  <div id="goalHistory" class="hidden">
+    <h3 class="yourcurrentgoals">Completed Goals</h3>
+    <div id="historyList"></div>
+  </div>
+
+ </div>
+</div>
+
+<script src="script3.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protective Hairstyle Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;700&family=Paytone+One&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="calculator-wrapper"> 
+
+    <!-- Main Card -->
+    <div class="card">
+      <a href="index.html" class="home-icon" title="Go Home">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="home-svg">
+          <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z" />
+        </svg>
+      </a>
+
+      <h1 id="growthcalctitle">Growth Based Protective Hairstyle Calculator</h1>
+      <p class="directions">Please make sure all fields are complete</p>
+
+      <!-- Growth Rate Selection -->
+      <div class="questiondd">
+        <label for="growthRate">How fast does your hair grow?</label>
+        <select id="growthRate" onchange="storeInput('growthRate', this.value)">
+          <option value="0">-- Select growth rate --</option>
+          <option value="0.125">Fast (0.5 in/month)</option>
+          <option value="0.0875">Average (0.35 in/month)</option>
+          <option value="0.05">Slow (0.2 in/month)</option>
+          <option value="unsure">I'm not sure</option>
+        </select>
+      </div>
+
+      <!-- Desired Growth Input -->
+      <div class="question">
+        <label for="desiredGrowth">How much new growth do you want before taking the style out?</label>
+       <div> <input id="desiredGrowth" placeholder="Enter amount in inches" type="number" step="0.01" onchange="storeInput('desiredGrowth', this.value)"> </div> 
+      </div>
+
+    
+      <!-- Buttons -->
+      <button class="focus-button" onclick="submitQuiz()">Calculate</button>
+      <a href="index5.html"><button class="start-over-button">Start Over</button></a>
+
+      <!-- Disclaimer -->
+      <p class="disclaimer2"><strong>Disclaimer:</strong> This calculator provides estimates based on theoretical equations. Actual results may vary and should not be considered professional haircare advice.</p>
+    </div>
+
+    <!-- Results Section -->
+    <div id="displayInfo2" class="display-info"></div>
+    <div id="calculationResult2" class="calculation-result"></div>
+
+  </div> 
+
+  <script src="script2.js"></script>
+</body>
+</html>

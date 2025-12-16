@@ -1,0 +1,332 @@
+/* =========================
+   Reset and Base Styles
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body setup for full-screen flex centering */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Catamaran', sans-serif;
+  background-image: url('images/Hair Hub Background-2.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 20px;
+}
+button, input, textarea {
+  max-width: 100%;
+  font-family: 'Catamaran', sans-serif;
+}
+/* =========================
+   Typography
+========================= */
+h1, h2 {
+  font-family: 'Paytone One', sans-serif;
+  color: #EF5B9C;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h1 { font-size: 26px; margin-top: 40px; }
+h2 { font-size: 18px; }
+
+.action-link {
+    font-size: 10px;
+    margin-left: 3px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    color: #6E9AC4;
+
+}
+
+.action-link:hover {
+    background-color: #FFE865;
+    color: #6E9AC4;
+}
+
+
+/* Card Formatting*/
+
+.cardhairgoals{
+    background-color: #FFFFFF;
+    color: #344354;
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 420px;         /* slightly larger than 350 so forms don't wrap oddly */
+    margin: 0 auto 20px auto; /* center & space underneath for results */
+   box-sizing: border-box;
+}
+
+.goal-card{
+    text-align: center;
+}
+
+
+/* Container */
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* horizontal centering */
+  justify-content: flex-start; /* natural top alignment like other cards */
+  padding: 20px;
+}
+
+
+
+
+/* =========================
+   Buttons
+========================= */
+button {
+  padding: 6px 12px;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #6E9AC4;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #FFE865;
+}
+
+/* =========================
+   Inputs / Selects
+========================= */
+
+input, textarea {
+  font-size: 14px;
+}
+
+.targetdateentry{
+    width: 100px;
+}
+.goal-title {
+  font-size: 14px;  /* match current goal font-size */
+  font-weight: bold;
+  text-align: center;
+  color: #344354;   /* same color as current goals */
+  margin-bottom: 6px;
+}
+
+.target-date {
+  font-size: 12px;  /* match current goal date */
+  color: #6E9AC4;   /* optional, same as current goals target date */
+
+}
+
+.history-goal-card {
+  margin-top: 20px; /* adjust spacing as needed */
+}
+
+
+/* =========================
+   Tabs & Goals
+========================= */
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0 30px 0;
+  justify-content: center;
+}
+
+.tab {
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.tab:hover { background-color: #FFE865; color: #fff; }
+.active { background: #EF5B9C; color: white; }
+.hidden { display: none; }
+
+.tab-content {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.goal-card, .entry {
+  background: white;
+  padding: 16px;
+  margin: 8px auto;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.entry { background: #f3f3f3; }
+.entry:last-child { margin-bottom: 0; }
+
+.yourcurrentgoals { font-size: 20px; color: #6E9AC4; text-align: center; }
+.goal-tracker { font-size: 32px; margin-bottom: 10px; }
+
+.entry {
+  background: #f3f3f3;
+  padding: 12px;
+  margin: 8px auto;
+  border-radius: 8px;
+  text-align: center; /* <-- add this */
+}
+
+.entry-text {
+  font-weight: bold;    /* optional: bold the text */
+  font-size: 12px;      /* adjust to whatever size you want */
+  text-align: center;   /* keeps it centered */
+}
+
+/* =========================
+ Pop Up
+========================= */
+
+.congrats-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.congrats-box {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  width: 80%;
+  max-width: 300px;
+  font-size: 16px;
+  color: #344354;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  animation: popupBounce 0.3s ease-out;
+}
+
+.congrats-box button {
+  margin-top: 15px;
+  padding: 8px 14px;
+  background-color: #6E9AC4;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.congrats-box button:hover {
+  background-color: #FFE865;
+}
+
+@keyframes popupBounce {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* =========================
+   Home Icon
+========================= */
+
+.home-icon {
+  position: fixed;  /* fixed keeps it in the corner, not relative to card */
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-svg {
+  width: 35px;
+  height: 35px;
+  fill: #EF5B9C;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.home-svg:hover { fill: #FFE865; }
+
+
+/* =========================
+   Media Queries (Mobile First)
+========================= */
+
+@media (max-width: 768px) {
+
+    .cardhairgoals{
+    width: 90%;           /* matches other cards */
+    max-width: 420px;     /* same as other cards */
+    margin: 20px auto;    /* horizontal centering */
+    padding-top: 20px;    /* reduce vertical padding */
+    padding-bottom: 20px;
+    box-sizing: border-box;
+   
+  }
+
+   body{ background-size: cover; background-position: 80% 50%;}
+
+  /* Adjust fonts and buttons */
+  .goal-tracker { font-size: 22px; margin-top: 20px; }
+  h3 { font-size: 18px; }
+  p, .description-text { font-size: 14px; }
+  button { font-size: 14px; padding: 4px 8px; }
+
+
+    .tabs { gap: 8px; }
+    .tab { padding: 6px 10px; font-size: 14px; }
+
+    input, textarea {
+    font-size: 12px; width: 200px;}
+
+    .home-svg {
+  width: 30px;
+  height: 30px;
+
+}
+  
+
+
+}
+
+
+@media (max-width: 350px) {
+    .tabs { gap: 8px; }
+    .tab { padding: 10px 12px; font-size: 12px; }
+
+}
+
+@media (max-width: 400px) {
+    .action-link {
+    font-size: 8px;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+}
+

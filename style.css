@@ -1,0 +1,464 @@
+/* =========================
+   Reset and Base Styles
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body setup for full-screen flex centering */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Catamaran', sans-serif;
+  background-image: url('images/Hair Hub Background-2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 20px;
+}
+
+
+
+
+button, input, textarea {
+  max-width: 100%;
+  font-family: 'Catamaran', sans-serif;
+}
+
+/* ========================= 
+    Braid Estimator 
+========================= */
+
+/* Optional: style the option text */
+/* All dropdowns inside .question */
+.question select {
+  font-size: 16px; /* adjust as needed */
+  width: 150px;
+  text-align: center;
+}
+#estimatebutton{
+  margin-top: 10px;
+}
+
+
+/* =========================
+   Typography
+========================= */
+h1, h2 {
+  font-family: 'Paytone One', sans-serif;
+  color: #EF5B9C;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h1 { font-size: 26px; margin-top: 40px; }
+h2 { font-size: 18px; }
+
+p, .description-text, .directions {
+  font-size: 14px;
+  color: #344354;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#results {
+  display: none;
+  font-family: 'Paytone One', sans-serif;
+  font-size: 18px;
+  color: #EF5B9C;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.question input {
+  font-size: 15px;
+  width: 175px;
+  text-align: center;
+}
+
+.notes, .question {
+  margin-bottom: 10px;
+}
+
+h1 { margin-top: 0; }
+/* =========================
+   Card Styles
+========================= */
+.card {
+  margin: 0 auto;
+}
+
+/* Cards consistent sizing and spacing */
+.card,
+.card2,
+.maincard{
+  background-color: #FFFFFF;
+  color: #344354;
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 420px;         /* slightly larger than 350 so forms don't wrap oddly */
+  margin: 0 auto 20px auto; /* center & space underneath for results */
+  box-sizing: border-box;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* horizontal centering */
+  justify-content: center; /* natural top alignment like other cards */
+  padding: 20px;
+}
+
+
+
+#budgetcalcard{
+  margin-top: 10%;
+}
+
+.calculator-wrapper {
+  min-height: 100vh;                /* fills viewport */
+  display: flex;
+  flex-direction: column;
+  align-items: center;              /* horizontal center */
+  justify-content: center;          /* vertical center */
+  padding: 20px;
+  box-sizing: border-box;
+  transition: padding-top 300ms ease, justify-content 300ms ease;
+}
+
+/* When results are shown, add .results-open to allow space at top */
+.calculator-wrapper.results-open {
+  justify-content: flex-start;      /* push content toward top so results sit below */
+  padding-top: 6vh;                 /* small gap from top; tweak if needed */
+}
+
+
+
+
+
+/* =========================
+   Buttons
+========================= */
+button {
+  padding: 12px 24px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #6E9AC4;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #FFE865;
+}
+
+.start-over-button {
+  display: block;
+  margin: 20px auto;
+  font-size: 14px;
+  background-color: #344354;
+}
+
+.start-over-button:hover {
+  background-color: #EF5B9C;
+}
+
+.addgoalbutton {
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #6E9AC4;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addgoalbutton:hover {
+  background-color: #FFE865;
+}
+
+/* =========================
+   Inputs / Selects
+========================= */
+#growthRate {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+input, textarea {
+  font-size: 14px;
+}
+
+/* =========================
+   Results Boxes
+========================= */
+
+/* Results boxes */
+/* Results sit below the card in document flow (no fixed positioning) */
+#displayInfo, #calculationResult, #displayInfo2, #calculationResult2 {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 12px auto;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-sizing: border-box;
+
+  /* Remove visibility trickery */
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+
+.show-results {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+
+#displayInfo, #displayInfo2 { background-color: #F1CEFF; color: #344354; }
+#calculationResult, #calculationResult2 { background-color: #FFE865; color: #344354; }
+
+/* visible state */
+.show-results {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition-delay: 0s;
+}
+
+.scroll-callout {
+  display: none;               /* hide by default */
+  text-align: center;
+  font-size: 14px;
+  color: #EF5B9C;
+  font-weight: bold;
+  margin-top: 10px;
+  animation: bounce 1s infinite alternate;
+}
+
+/* Bounce animation to draw attention */
+@keyframes bounce {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(5px); }
+}
+
+
+
+
+/* =========================
+   Footer / Links
+========================= */
+.footer {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #F1CEFF;
+  text-align: center;
+  color: #344354;
+  font-size: 14px;
+}
+
+.logo { width: 150px; height: auto; }
+
+.app-links { margin-top: 10px; font-weight: bold; }
+.app-link {
+  display: inline-block;
+  margin: 5px 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #FFFFFF;
+  background-color: #EF5B9C;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.app-link:hover { background-color: #6E9AC4; }
+
+.disclaimer, .disclaimer2 {
+  color: #000;
+  text-align: center;
+  padding: 2px 4px;
+  background-color: #F1CEFF;
+  border-radius: 5px;
+  font-family: 'Catamaran', sans-serif;
+}
+
+.disclaimer { font-size: 9px; margin-top: 40px; }
+.disclaimer2 { font-size: 10px; margin-top: 10px; }
+
+.feedback{
+  margin-top: 20px;
+}
+
+/* =========================
+   Tabs & Goals
+========================= */
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0 30px 0;
+  justify-content: center;
+}
+
+.tab {
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.tab:hover { background-color: #FFE865; color: #fff; }
+.active { background: #EF5B9C; color: white; }
+.hidden { display: none; }
+
+.goal-card, .entry {
+  background: white;
+  padding: 16px;
+  margin: 8px auto;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.entry { background: #f3f3f3; }
+.entry:last-child { margin-bottom: 0; }
+
+.yourcurrentgoals { font-size: 20px; color: #6E9AC4; text-align: center; }
+.goal-tracker { font-size: 32px; margin-bottom: 10px; }
+
+/* =========================
+   Home Icon
+========================= */
+
+.home-icon {
+  position: fixed;  /* fixed keeps it in the corner, not relative to card */
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-svg {
+  width: 25px;
+  height: 25px;
+  fill: #EF5B9C;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.home-svg:hover { fill: #FFE865; }
+
+/* =========================
+   Media Queries (Mobile First)
+========================= */
+
+@media (max-width: 768px) {
+
+  /* Make card flow naturally on mobile */
+  @media (max-width: 768px) {
+  .card,
+  .card2,
+  .maincard{
+    width: 90%;           /* matches other cards */
+    max-width: 420px;     /* same as other cards */
+    margin: 20px auto;    /* horizontal centering */
+    padding-top: 20px;    /* reduce vertical padding */
+    padding-bottom: 20px;
+    box-sizing: border-box;
+  }
+
+  .question input {
+  font-size: 12px;
+  width: 150px;
+  text-align: center;
+}
+.question{
+  font-size: 14px;
+}
+.question select {
+  font-size: 12px; /* adjust as needed */
+  text-align: center;
+}
+
+}
+
+ body{ background-size: cover; background-position: 80% 50%;}
+
+
+  /* Make results boxes appear below the card */
+  #displayInfo, #calculationResult,
+  #displayInfo2, #calculationResult2 {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 90%;
+    margin: 5px auto;   /* spacing below the card */
+    visibility: hidden;
+  }
+
+  /* Adjust fonts and buttons */
+  h1 { font-size: 22px; margin-top: 20px; }
+  h2 { font-size: 18px; }
+  p, .description-text { font-size: 14px; }
+  button { font-size: 14px; padding: 10px 20px; }
+  #growthRate, #desiredGrowth {font-size: 14px;} 
+}
+
+@media (max-width: 430px) {
+  .home-icon { transform: scale(0.85); right: 6px; }
+}
+
+
+@media (max-width: 768px) {
+  .calculator-wrapper {
+    width: 100%;
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    justify-content: flex-start;
+    padding-top: 40px;
+    min-height: 100vh;
+  }
+}
+
+
+/* Desktop layout stabilizer */
+@media (min-width: 769px) {
+  .container {
+    justify-content: center;   /* keep card centered vertically */
+    min-height: 100vh;         /* stop layout jump */
+    padding-top: 0;
+  }
+}
+

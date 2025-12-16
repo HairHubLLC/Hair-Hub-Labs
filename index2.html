@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protective Hairstyle Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;700&family=Paytone+One&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+ <div class="calculator-wrapper"> 
+    <div id="budgetcalcard"class="card2">
+
+      <a href="index.html" class="home-icon" title="Go Home">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="home-svg">
+          <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z"/>
+        </svg>
+      </a>
+
+      <h1 id="budgetcalctitle">Budget Based Protective Hairstyle Calculator</h1>
+      <h5 class="directions">Make sure to only input numbers and that all fields are complete</h5>
+
+      <div class="question">
+        <p>1. How much in total did you spend on this hairstyle (products, hair, service, etc)?</p>
+        <input type="number" id="dollarsspent" placeholder="Enter amount in $" oninput="storeInput('dollarsspent', this.value)">
+      </div>
+
+      <div class="question">
+        <p>2. How much time did you spend doing or getting the hairstyle done (hours)?</p>
+        <input type="number" id="timespent" placeholder="Enter amount in hours" oninput="storeInput('timespent', this.value)">
+      </div>
+
+      <div class="question">
+        <p>3. What value do you want to put on your time (e.g. $20/hour)?</p>
+        <h6 class="notes">Optional but you know what they say "time is money"</h6>
+        <input type="number" id="timevalue" step="1.0" placeholder="Enter amount in $/hr" oninput="storeInput('timevalue', this.value)">
+      </div>
+
+      <div class="question">
+        <p>4. How much do you budget for hairstyles each month?</p>
+        <input type="number" id="budget" step="1.0" placeholder="Enter amount in $/month" oninput="storeInput('budget', this.value)">
+      </div>
+  
+      <div id="scrollCallout" class="scroll-callout">⬇ Scroll down to see results ⬇</div>
+
+      <button class="focus-button" onclick="submitQuiz()">Calculate</button>
+       
+      <a href="index5.html"><button class="start-over-button">Start Over</button></a>
+
+      <p class="disclaimer2">
+        <strong>Disclaimer:</strong> This calculator provides estimates based on theoretical equations.
+        Actual results may vary and should not be considered professional haircare advice.
+      </p>
+
+    </div> <!-- end card2 -->
+  </div> <!-- end calculator-wrapper -->
+ 
+
+  <!-- Results sections placed AFTER card and in normal flow -->
+  <div id="displayInfo" class="display-info"></div>
+
+  <div id="calculationResult" class="calculation-result">
+    <h2 id="results">Results</h2>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

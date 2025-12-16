@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Braid Time Estimator</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;700&family=Paytone+One&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+ <div class="calculator-wrapper"> 
+    <div id="budgetcalcard"class="card2">
+
+      <a href="index.html" class="home-icon" title="Go Home">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="home-svg">
+          <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z"/>
+        </svg>
+      </a>
+
+      <h1 id="budgetcalctitle">Braid Time Estimator</h1>
+      <h5 class="directions">Answer a few questions to estimate install time and amount of braiding hair needed</h5>
+
+   
+    <div class="question">
+        <p>1. What braid size are you getting?</p>
+        <select id="braidSize" onchange="storeInput('braidSize', this.value)">
+        <option value="">Select braid size</option>
+        <option value="micro">Micro</option>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+        <option value="jumbo">Jumbo</option>
+        </select>
+    </div>
+
+    <div class="question">
+        <p>2. How long do you want your braids to be?</p>
+        <select id="braidLength" onchange="storeInput('braidLength', this.value)">
+        <option value="">Select length</option>
+        <option value="shoulder">Shoulder</option>
+        <option value="midback">Mid-back</option>
+        <option value="waist">Waist</option>
+        <option value="butt">Butt</option>
+        <option value="knee">Knee</option>
+        </select>
+    </div>
+    <div class="question">
+        <p>3. What is your current natural hair length?</p>
+        <select id="hairLength" onchange="storeInput('hairLength', this.value)">
+        <option value="">Select hair length</option>
+        <option value="twa">TWA</option>
+        <option value="shoulder">Shoulder length</option>
+        <option value="armpit">Armpit length</option>
+        <option value="brastrap">Bra strap length</option>
+        <option value="midbackplus">Mid-back or longer</option>
+        </select>
+    </div>
+
+    <div class="question">
+        <p>4. Who is installing the braids?</p>
+        <select id="skillLevel" onchange="storeInput('skillLevel', this.value)">
+        <option value="">Select skill level</option>
+        <option value="professional">Professional stylist</option>
+        <option value="intermediate">DIY – Intermediate</option>
+        <option value="beginner">DIY – Beginner</option>
+        </select>
+    </div>
+
+    <div class="question">
+  <p>Optional: Are these boho braids?</p>
+  <select id="bohoKnotless" onchange="storeInput('bohoKnotless', this.value)">
+    <option value="">Select an option</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+  
+      <div id="scrollCallout" class="scroll-callout">⬇ Scroll down to see results ⬇</div>
+
+      <button id="estimatebutton" class="focus-button" onclick="submitQuiz()">Estimate</button>
+      
+
+      <p class="disclaimer2">
+        <strong>Disclaimer:</strong> This calculator provides estimates based on theoretical equations.
+        Actual results may vary and should not be considered professional haircare advice.
+      </p>
+
+    </div> <!-- end card2 -->
+  </div> <!-- end calculator-wrapper -->
+ 
+
+  <!-- Results sections placed AFTER card and in normal flow -->
+  <div id="displayInfo" class="display-info"></div>
+
+  <div id="calculationResult" class="calculation-result">
+    <h2 id="results">Results</h2>
+  </div>
+
+  <script src="script4.js"></script>
+
+</body>
+</html>
