@@ -344,7 +344,7 @@ input, textarea {
  
   
 
-
+}
 
 @media (max-width: 350px) {
     .tabs { gap: 8px; }
@@ -354,7 +354,7 @@ input, textarea {
 
 @media (max-width: 400px) {
     .action-link {
-    font-size: 8px;
+    font-size: 7px;
     margin-left: 1px;
     margin-top: 1px;
 }
@@ -362,44 +362,47 @@ input, textarea {
 
 @media (max-width: 600px) {
   .entry {
-    flex-direction: column; /* stack vertically */
-    align-items: center;    /* center everything */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0; /* no extra gap between left/right */
   }
 
-  .entry-left, .entry-right {
-    width: 100%;  /* take full width */
-    text-align: center; /* center text and image */
-  }
-
-  .entry-right .action-link {
-    display: block;      /* put edit/delete on separate lines */
-    margin: 5px 0;       /* spacing between links */
-  }
-
-  .entry-thumb {
-    margin: 0 auto 10px auto; /* center image with bottom margin */
-  }
-
-  #goalsinstructions {
-  font-size: 11px;
- }
-  
-}
-
-@media (max-width: 600px) {
+  .entry-left,
   .entry-right {
-    text-align: center;       /* center text and actions */
-  }
-
-  .entry-right .action-link {
-    display: inline-block;    /* keep them on same line */
-    margin: 0 8px;            /* spacing between links */
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
   }
 
   .entry-thumb {
-    margin-bottom: 10px;      /* space between image and text */
+    display: block;
+    margin: 0 auto 5px auto; /* image → text gap */
+    max-width: 90%;
+    height: auto;
   }
 
+  .entry-text {
+    margin: 0 0 4px 0;  /* minimal spacing below text */
+    line-height: 1.2;  /* tighter line spacing */
+  }
 
+  .entry-right small {
+    display: block;
+    margin: 0 0 0px 0; /* date spacing */
+    line-height: 1.2;
+  }
+
+  .entry-right .action-link {
+    display: inline-block;  
+    margin: 0 6px 2px 6px;  /* small spacing above/below */
+    padding: 0;
+  }
+
+  /* Remove extra spacing caused by any <br> */
+  .entry-right br {
+    display: none;
+  }
 }
-}
+
