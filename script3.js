@@ -61,9 +61,15 @@ function addEntry(goalId) {
   // File input
   const fileInput = document.createElement("input");
   fileInput.type = "file";
+  fileInput.accept = "image/*"; // ← REQUIRED for camera roll
 
-  // ONLY allow safe gallery image formats
-  fileInput.accept = "image/jpeg, image/png";
+  const imageNote = document.createElement("small");
+  imageNote.textContent = "For best results, upload a file or photo already saved on your phone (not live camera).";
+  imageNote.style.display = "block";
+  imageNote.style.marginBottom = "6px";
+  imageNote.style.color = "#6E9AC4";
+
+popup.appendChild(imageNote);
 
 
   popup.appendChild(fileInput);
@@ -72,29 +78,17 @@ function addEntry(goalId) {
 
   //
 
-  fileInput.addEventListener("change", () => {
-  const file = fileInput.files[0];
+ fileInput.addEventListener("change", () => {
+  const file = fileInput.files?.[0];
   if (!file) return;
 
-  // Hard reject camera photos or unsupported types
-  const validTypes = ["image/jpeg", "image/png"];
-
-  if (!validTypes.includes(file.type)) {
-    alert("Please upload a photo from your gallery (JPEG or PNG only).");
-
-    // Reset input so Save won't crash
+  // Warn ONLY if camera metadata is detected (rare but safe)
+  if (file.type === "" || !file.type.startsWith("image/")) {
+    alert("Tip: For best results, upload a file or photo already saved on your phone.");
     fileInput.value = "";
-    return;
-  }
-
-  // Extra safety: block huge images
-  const MAX_SIZE_MB = 5;
-  if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-    alert("Image is too large. Please choose a smaller photo (under 5MB).");
-    fileInput.value = "";
-    return;
   }
 });
+
 
 
 
