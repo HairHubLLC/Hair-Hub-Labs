@@ -109,10 +109,6 @@ popup.appendChild(imageNote);
   const note = textarea.value.trim();
   const file = fileInput.files?.[0] || null;
 
-  if (file && !["image/jpeg", "image/png"].includes(file.type)) {
-  alert("Only JPEG or PNG images are allowed.");
-  return;
-}
 
 
   if (!note && !file) {
