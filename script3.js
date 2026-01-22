@@ -62,9 +62,12 @@ function addEntry(goalId) {
   const fileInput = document.createElement("input");
   fileInput.type = "file";
   fileInput.accept = "image/*";
+  fileInput.capture = "environment"; // mobile camera support
+
   popup.appendChild(fileInput);
   popup.appendChild(document.createElement("br"));
   popup.appendChild(document.createElement("br"));
+
 
   // Save button
   const saveBtn = document.createElement("button");
@@ -79,40 +82,50 @@ function addEntry(goalId) {
 
   document.body.appendChild(popup);
 
-  saveBtn.onclick = () => {
-    const note = textarea.value.trim();
-    const file = fileInput.files[0];
+ saveBtn.onclick = () => {
+  const note = textarea.value.trim();
+  const file = fileInput.files[0];
 
-    if (!note && !file) {
-      alert("Please add a note or select an image.");
-      return;
-    }
+  if (!note && !file) {
+    alert("Please add a note or select an image.");
+    return;
+  }
 
-    const goal = goals.find(g => g.id === goalId);
-    if (!goal) {
-      alert("Goal not found!");
-      return;
-    }
+  const goal = goals.find(g => g.id === goalId);
+  if (!goal) {
+    alert("Goal not found!");
+    return;
+  }
 
-    const entry = { text: note || "", date: new Date().toLocaleString() };
+  const entry = { text: note || "", date: new Date().toLocaleString() };
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        entry.image = e.target.result; // base64 image
+  if (file) {
+    resizeImage(file, 300, 300, (resizedBase64) => {
+      entry.image = resizedBase64;
+
+      try {
         goal.entries.push(entry);
-        save();
+        save();                 // ✅ safeguarded
         renderGoals();
         document.body.removeChild(popup);
-      };
-      reader.readAsDataURL(file);
-    } else {
+      } catch (e) {
+        alert("Image too large to save. Please try a smaller photo.");
+        console.error(e);
+      }
+    });
+
+  } else {
+    try {
       goal.entries.push(entry);
-      save();
+      save();                 // ✅ safeguarded
       renderGoals();
       document.body.removeChild(popup);
+    } catch (e) {
+      alert("Unable to save entry.");
+      console.error(e);
     }
-  };
+  }
+};
 
   cancelBtn.onclick = () => {
     document.body.removeChild(popup);
@@ -384,4 +397,41 @@ function expandImage(src) {
   overlay.onclick = () => overlay.remove();
 
   document.body.appendChild(overlay);
+}
+
+function resizeImage(file, maxWidth, maxHeight, callback) {
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      let width = img.width;
+      let height = img.height;
+
+      // Keep square crop
+      const size = Math.min(width, height);
+      const sx = (width - size) / 2;
+      const sy = (height - size) / 2;
+
+      canvas.width = maxWidth;
+      canvas.height = maxHeight;
+
+      ctx.drawImage(
+        img,
+        sx, sy, size, size,
+        0, 0, maxWidth, maxHeight
+      );
+
+      // Compress to JPEG
+      const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7);
+      callback(compressedBase64);
+    };
+
+    img.src = e.target.result;
+  };
+
+  reader.readAsDataURL(file);
 }
