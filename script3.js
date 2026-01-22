@@ -61,7 +61,10 @@ function addEntry(goalId) {
   // File input
   const fileInput = document.createElement("input");
   fileInput.type = "file";
-  fileInput.accept = "image/*";
+
+  // ONLY allow safe gallery image formats
+  fileInput.accept = "image/jpeg, image/png";
+
 
   popup.appendChild(fileInput);
   popup.appendChild(document.createElement("br"));
