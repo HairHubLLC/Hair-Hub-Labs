@@ -39,6 +39,8 @@ h1, h2 {
 h1 { font-size: 26px; margin-top: 40px; }
 h2 { font-size: 18px; }
 
+#goalsinstructions{ margin-top: 30px; font-size: 15px; margin-bottom: 20px;}
+
 .action-link {
     font-size: 10px;
     margin-left: 3px;
@@ -53,6 +55,34 @@ h2 { font-size: 18px; }
     background-color: #FFE865;
     color: #6E9AC4;
 }
+
+
+.entry {
+  display: flex;
+  align-items: flex-start; /* align image and text at the top */
+  gap: 10px; /* space between image and text */
+  margin-bottom: 10px;
+  padding: 5px;
+  border-bottom: 1px solid #ddd; /* optional separator */
+}
+
+.entry-left {
+  flex-shrink: 0; /* image won't shrink */
+}
+
+.entry-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.entry-right {
+  flex-grow: 1; /* text takes remaining space */
+}
+
+
 
 
 /* Card Formatting*/
@@ -278,7 +308,7 @@ input, textarea {
    Media Queries (Mobile First)
 ========================= */
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
 
     .cardhairgoals{
     width: 90%;           /* matches other cards */
@@ -309,11 +339,11 @@ input, textarea {
   width: 30px;
   height: 30px;
 
+ 
 }
+ 
   
 
-
-}
 
 
 @media (max-width: 350px) {
@@ -330,3 +360,46 @@ input, textarea {
 }
 }
 
+@media (max-width: 600px) {
+  .entry {
+    flex-direction: column; /* stack vertically */
+    align-items: center;    /* center everything */
+  }
+
+  .entry-left, .entry-right {
+    width: 100%;  /* take full width */
+    text-align: center; /* center text and image */
+  }
+
+  .entry-right .action-link {
+    display: block;      /* put edit/delete on separate lines */
+    margin: 5px 0;       /* spacing between links */
+  }
+
+  .entry-thumb {
+    margin: 0 auto 10px auto; /* center image with bottom margin */
+  }
+
+  #goalsinstructions {
+  font-size: 11px;
+ }
+  
+}
+
+@media (max-width: 600px) {
+  .entry-right {
+    text-align: center;       /* center text and actions */
+  }
+
+  .entry-right .action-link {
+    display: inline-block;    /* keep them on same line */
+    margin: 0 8px;            /* spacing between links */
+  }
+
+  .entry-thumb {
+    margin-bottom: 10px;      /* space between image and text */
+  }
+
+
+}
+}

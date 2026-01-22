@@ -33,18 +33,95 @@ function addGoal() {
   document.getElementById("goalDate").value = "";
 }
 
+function addEntry(goalId) {
+  goalId = Number(goalId); // ensure it's a number
 
+  const popup = document.createElement("div");
+  popup.style.position = "fixed";
+  popup.style.top = "50%";
+  popup.style.left = "50%";
+  popup.style.transform = "translate(-50%, -50%)";
+  popup.style.backgroundColor = "white";
+  popup.style.padding = "20px";
+  popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
+  popup.style.zIndex = "1000";
 
-    function addEntry(goalId) {
-      const note = prompt("Add progress note:");
-      if (!note) return;
+  // Title
+  const title = document.createElement("p");
+  title.textContent = "Add progress note:";
+  popup.appendChild(title);
 
-      const goal = goals.find(g => g.id === goalId);
-      goal.entries.push({ text: note, date: new Date().toLocaleString() });
+  // Textarea
+  const textarea = document.createElement("textarea");
+  textarea.rows = 4;
+  textarea.style.width = "100%";
+  popup.appendChild(textarea);
+  popup.appendChild(document.createElement("br"));
 
+  // File input
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*";
+  popup.appendChild(fileInput);
+  popup.appendChild(document.createElement("br"));
+  popup.appendChild(document.createElement("br"));
+
+  // Save button
+  const saveBtn = document.createElement("button");
+  saveBtn.textContent = "Save";
+  popup.appendChild(saveBtn);
+
+  // Cancel button
+  const cancelBtn = document.createElement("button");
+  cancelBtn.textContent = "Cancel";
+  cancelBtn.style.marginLeft = "10px";
+  popup.appendChild(cancelBtn);
+
+  document.body.appendChild(popup);
+
+  saveBtn.onclick = () => {
+    const note = textarea.value.trim();
+    const file = fileInput.files[0];
+
+    if (!note && !file) {
+      alert("Please add a note or select an image.");
+      return;
+    }
+
+    const goal = goals.find(g => g.id === goalId);
+    if (!goal) {
+      alert("Goal not found!");
+      return;
+    }
+
+    const entry = { text: note || "", date: new Date().toLocaleString() };
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        entry.image = e.target.result; // base64 image
+        goal.entries.push(entry);
+        save();
+        renderGoals();
+        document.body.removeChild(popup);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      goal.entries.push(entry);
       save();
       renderGoals();
+      document.body.removeChild(popup);
     }
+  };
+
+  cancelBtn.onclick = () => {
+    document.body.removeChild(popup);
+  };
+}
+
+
+
+
 
     function deleteEntry(goalId, index) {
       const goal = goals.find(g => g.id === goalId);
@@ -123,18 +200,28 @@ function addGoal() {
       <small onclick="editTargetDate(${goal.id})" style="cursor: pointer; color: #6E9AC4;">
   Target Date: ${formatDate(goal.targetDate)}
 </small><br>
-      <span class="action-link" onclick="editGoal(${goal.id})">Edit</span>
       <span class="action-link" onclick="addEntry(${goal.id})">Add Progress Entry</span>
       <span class="action-link" onclick="closeGoal(${goal.id})">Close Goal</span>
-      <span class="action-link" onclick="deleteGoal(${goal.id})">Delete</span>
+      <span class="action-link" onclick="editGoal(${goal.id})">Edit Goal</span>
+      <span class="action-link" onclick="deleteGoal(${goal.id})">Delete Goal</span>
       <div>
         ${goal.entries.map((e, i) => `
           <div class="entry">
+          <div class="entry-left">
+            ${e.image ? `<img src="${e.image}" class="entry-thumb" onclick="expandImage('${e.image}')" />` : ""}
+          </div>
+          <div class="entry-right">
             <div class="entry-text">${e.text}</div>
             <small>${e.date}</small><br>
             <span class="action-link" onclick="editEntry(${goal.id}, ${i})">Edit Entry</span>
             <span class="action-link" onclick="deleteEntry(${goal.id}, ${i})">Delete Entry</span>
           </div>
+</div>
+
+</div>
+
+</div>
+
         `).join("")}
       </div>
     `;
@@ -270,3 +357,31 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("historyTab").classList.add("active");
       document.getElementById("currentTab").classList.remove("active");
     };
+
+function expandImage(src) {
+  // Create overlay
+  const overlay = document.createElement("div");
+  overlay.style.position = "fixed";
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = "100%";
+  overlay.style.height = "100%";
+  overlay.style.backgroundColor = "rgba(0,0,0,0.8)";
+  overlay.style.display = "flex";
+  overlay.style.justifyContent = "center";
+  overlay.style.alignItems = "center";
+  overlay.style.zIndex = "2000";
+
+  // Large image
+  const img = document.createElement("img");
+  img.src = src;
+  img.style.maxWidth = "90%";
+  img.style.maxHeight = "90%";
+  img.style.borderRadius = "10px";
+  overlay.appendChild(img);
+
+  // Click anywhere to close
+  overlay.onclick = () => overlay.remove();
+
+  document.body.appendChild(overlay);
+}
