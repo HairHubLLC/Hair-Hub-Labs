@@ -70,6 +70,33 @@ function addEntry(goalId) {
   popup.appendChild(document.createElement("br"));
   popup.appendChild(document.createElement("br"));
 
+  //
+
+  fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  // Hard reject camera photos or unsupported types
+  const validTypes = ["image/jpeg", "image/png"];
+
+  if (!validTypes.includes(file.type)) {
+    alert("Please upload a photo from your gallery (JPEG or PNG only).");
+
+    // Reset input so Save won't crash
+    fileInput.value = "";
+    return;
+  }
+
+  // Extra safety: block huge images
+  const MAX_SIZE_MB = 5;
+  if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+    alert("Image is too large. Please choose a smaller photo (under 5MB).");
+    fileInput.value = "";
+    return;
+  }
+});
+
+
 
   // Save button
   const saveBtn = document.createElement("button");
@@ -86,7 +113,13 @@ function addEntry(goalId) {
 
  saveBtn.onclick = () => {
   const note = textarea.value.trim();
-  const file = fileInput.files[0];
+  const file = fileInput.files?.[0] || null;
+
+  if (file && !["image/jpeg", "image/png"].includes(file.type)) {
+  alert("Only JPEG or PNG images are allowed.");
+  return;
+}
+
 
   if (!note && !file) {
     alert("Please add a note or select an image.");
