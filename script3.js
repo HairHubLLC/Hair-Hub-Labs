@@ -62,7 +62,6 @@ function addEntry(goalId) {
   const fileInput = document.createElement("input");
   fileInput.type = "file";
   fileInput.accept = "image/*";
-  fileInput.capture = "environment"; // mobile camera support
 
   popup.appendChild(fileInput);
   popup.appendChild(document.createElement("br"));
