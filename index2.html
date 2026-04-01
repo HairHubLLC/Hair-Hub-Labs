@@ -47,8 +47,7 @@
 
       <button class="focus-button" onclick="submitQuiz()">Calculate</button>
        
-      <a href="index5.html"><button class="start-over-button">Start Over</button></a>
-
+       <a href="index5.html" class="start-over-link" style="display:block; margin-top: 5px;">Start Over</a>
       <p class="disclaimer2">
         <strong>Disclaimer:</strong> This calculator provides estimates based on theoretical equations.
         Actual results may vary and should not be considered professional haircare advice.
@@ -66,6 +65,38 @@
   </div>
 
   <script src="script.js"></script>
+
+  <!-- ===== New Budget Validation Script ===== -->
+  <script>
+    const calcButton = document.querySelector(".focus-button");
+
+    calcButton.addEventListener("click", function(event) {
+      const budgetInput = document.getElementById("budget").value;
+      const budget = Number(budgetInput);
+
+      // Validation: empty, 0, or negative
+      if (budgetInput === "" || budget <= 0) {
+        event.preventDefault(); // stop submitQuiz from running
+
+        if (budgetInput === "") {
+          alert(
+            "Please enter your monthly hairstyle budget to calculate results.\n\n" +
+            "If you don’t have a budget, try using the Growth Calculator instead."
+          );
+        } else if (budget === 0) {
+          alert(
+            "Please input a number other than 0 for your budget.\n\n" +
+            "This calculator is intended for users who have a budget they want to stay within. " +"If you don’t have a budget, try using the Growth Calculator instead."
+          );
+        } else if (budget < 0) {
+          alert(
+            "Budget cannot be negative. Please enter a positive number.\n\n" +
+            "If you don’t have a budget, try using the Growth Calculator instead."
+          );
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>

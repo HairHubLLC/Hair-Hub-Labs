@@ -67,6 +67,10 @@ p, .description-text, .directions {
   text-align: center;
 }
 
+.directions{
+  margin-top: 10px;
+}
+
 #results {
   display: none;
   font-family: 'Paytone One', sans-serif;
@@ -153,7 +157,7 @@ h1 { margin-top: 0; }
 button {
   padding: 12px 24px;
   margin-top: 20px;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
   color: #FFFFFF;
   background-color: #6E9AC4;
@@ -170,13 +174,22 @@ button:hover {
 .start-over-button {
   display: block;
   margin: 20px auto;
-  font-size: 14px;
+  font-size: 12px;
   background-color: #344354;
 }
 
 .start-over-button:hover {
   background-color: #EF5B9C;
 }
+
+.start-over-link {
+  color: #FF5B9C;      /* Text color */
+  text-decoration: underline; /* optional underline */
+  cursor: pointer;     /* shows hand on hover */
+  font-size: 10px;
+  font-family: 'Catamaran', sans-serif;
+}
+
 
 .addgoalbutton {
   margin-top: 20px;
@@ -205,6 +218,79 @@ button:hover {
 input, textarea {
   font-size: 14px;
 }
+/* PSC Modal */
+/* Modal backdrop */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; 
+  z-index: 1000; /* Above everything */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Scroll if needed */
+  background-color: rgba(0,0,0,0.5); /* semi-transparent black */
+}
+
+/*Tracker*/
+.opentracker{
+  padding: 1px;
+ 
+
+}
+
+.tracker-tabs {
+  margin-top: 0;      /* remove space above tabs */
+  margin-bottom: 15px; /* optional: space below tabs */
+}
+
+#trackedStylesSection h1 {
+  margin-bottom: 0px; /* shrink space below the title */
+}
+
+#trackedStylesSection {
+  transition: height 0.3s ease, min-height 0.3s ease;
+  overflow: hidden; /* hide anything that collapses */
+}
+
+#trackedStylesSection.compressed {
+  height: auto; /* will adjust dynamically */
+  min-height: 80px; /* adjust based on title + tabs height */
+}
+
+/* Optionally, hide lists when collapsed */
+#trackedStylesSection.compressed #currentStylesContainer,
+#trackedStylesSection.compressed #historyStylesContainer {
+  display: none;
+}
+
+/* Modal content box */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto; /* Center vertically and horizontally */
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #FF5B9C;
+}
+
 
 /* =========================
    Results Boxes
@@ -212,21 +298,34 @@ input, textarea {
 
 /* Results boxes */
 /* Results sit below the card in document flow (no fixed positioning) */
+
+
 #displayInfo, #calculationResult, #displayInfo2, #calculationResult2 {
   display: block;
   width: 100%;
   max-width: 420px;
-  margin: 12px auto;
+  margin: 6px auto;
   padding: 15px;
   border-radius: 8px;
   text-align: center;
   box-sizing: border-box;
+  position: relative !important;
 
   /* Remove visibility trickery */
   opacity: 0;
   transform: translateY(6px);
   transition: opacity 250ms ease, transform 250ms ease;
 }
+#calculationResult {
+margin-bottom: 80px;
+}
+
+#displayInfo {
+  margin-top: -10px;
+  
+
+}
+
 
 
 .show-results {
@@ -313,6 +412,10 @@ input, textarea {
 /* =========================
    Tabs & Goals
 ========================= */
+.styleTracker{
+  margin-bottom:5px;
+}
+
 .tabs {
   display: flex;
   gap: 12px;
@@ -345,6 +448,154 @@ input, textarea {
 .goal-tracker { font-size: 32px; margin-bottom: 10px; }
 
 /* =========================
+  Progress Bar
+========================= */
+.progress-container{
+width: 70%;
+height:10px;
+background:#e6e6e6;
+border-radius:10px;
+overflow:hidden;
+
+margin: 0 auto;   /* centers it */
+}
+
+.progress-bar{
+height:100%;
+background:#6E9AC4;
+transition:width .3s ease;
+}
+
+.progress-text{
+font-size:13px;
+margin-bottom:8px;
+}
+
+/* =========================
+  New Style Popup Box
+========================= */
+
+
+
+
+
+
+.modal-content .focus-button {
+  display: block;
+  margin: 15px auto 0 auto;
+}
+/* =========================
+ PSCT Image Thumbnail
+========================= */
+
+.style-thumb{
+width:100px;
+height:100px;
+object-fit:cover;
+border-radius:8px;
+margin-bottom:8px;
+cursor:pointer;
+}
+
+/* =========================
+ Hairstyle Title
+========================= */
+
+.style-title {
+  font-size: 18px;       /* bigger text */
+  font-weight: 600;      /* semi-bold */
+  margin-bottom: 8px;    /* space below */
+  text-align: center;    /* optional: center it */
+  color: #344354;        /* matches your palette */
+  margin-top: 10px;
+}
+
+/* Add a border and some spacing around each tracked style */
+.tracked-style {
+  border: 2px solid #EF5B9C;       /* blue border; pick your color */
+  border-radius: 10px;             /* rounded corners */
+  padding: 15px; 
+  margin-top: 30px;                  /* space inside the card */
+  margin-bottom: 15px;             /* space between cards */
+  background-color: #ffffff;       /* optional: white background */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* subtle shadow for depth */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* smooth hover */
+}
+
+/* Optional hover effect for interactivity */
+.tracked-style:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Slightly different styling for history styles */
+.tracked-style.history-style {
+  border-color: #6E9AC4;           /* lighter blue for history */
+  background-color: #ffffff;
+}
+
+
+/* =========================
+Toggle
+========================= */
+
+.card2 {
+  position: relative; /* so the toggle can be positioned inside the card */
+}
+
+.tracked-header {
+  text-align: center; /* centers the title */
+  padding: 10px 0;    /* vertical spacing */
+}
+
+.tracked-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* Toggle button in top-right of card */
+.toggle-arrow {
+  position: absolute;
+  top: 0px;      /* distance from top of card */
+  right: 20px;    /* distance from right of card */
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  color: #EF5B9C;
+  width: 20px;       /* optional, makes clickable area bigger */
+  height: 40px;      /* optional, makes clickable area bigger */
+  cursor: pointer;
+  transition: color 0.2s, transform 0.3s;
+
+  /* center the arrow inside the button */
+  width: 40px;        /* clickable area width */
+  height: 40px;       /* clickable area height */
+  display: flex;      /* use flex to center */
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+}
+.toggle-arrow:hover {
+  color: #EF5B9C;   /* change to whatever color you like on hover */
+}
+
+/* Collapsed state */
+.tracked-collapsed #currentStylesContainer,
+.tracked-collapsed #historyStylesContainer {
+  display: none;
+}
+
+.tracked-collapsed #toggleTrackedCard {
+  transform: rotate(0deg); /* arrow points down */
+}
+
+/* Expanded state */
+.tracked-expanded #toggleTrackedCard {
+  transform: rotate(180deg); /* arrow points up */
+}
+
+/* =========================
    Home Icon
 ========================= */
 
@@ -367,6 +618,65 @@ input, textarea {
 }
 
 .home-svg:hover { fill: #FFE865; }
+
+/* =========================
+   PSCT Action Links
+========================= */
+/* Tracker action links */
+.tracker-link {
+  display: inline-block;        /* keeps them inline but allows margin */
+  padding: 0px 7px;            /* space inside the link */
+  color: #EF5B9C;               /* change text color */
+  text-decoration: underline;    /* adds underline */
+  font-size: 12px;               /* adjust size */
+  cursor: pointer;               /* pointer cursor on hover */
+  margin-top: 0;
+}
+
+/* Optional: hover effect */
+.tracker-link:hover {
+  color: #6E9AC4;               /* change color on hover */
+  text-decoration: none;        /* remove underline on hover */
+}
+
+#installDate,
+#keepWeeks,
+#styleDescription,
+#styleImage {
+  width: 90%;         /* Adjust as needed */
+  max-width: 400px;   /* Optional */
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#trackedstylesheader{
+  margin-bottom: 0px;
+
+}
+
+#trackedStylesSection {
+margin-top: 20px; /* 👈 add this */
+transition: height 0.3s ease, min-height 0.3s ease;
+overflow: hidden;
+}
+
+.close-results {
+  position: absolute;
+  top: 8px;
+  right: 20px;
+  font-size: 23px;
+  font-weight: bold;
+  color: #EF5B9C;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.close-results:hover {
+  color: #EF5B9C;
+}
 
 /* =========================
    Media Queries (Mobile First)
@@ -459,6 +769,62 @@ input, textarea {
     justify-content: center;   /* keep card centered vertically */
     min-height: 100vh;         /* stop layout jump */
     padding-top: 0;
+  }
+}
+
+body::after {
+  content: "";
+  display: block;
+  height: 120px; /* increase this to control bottom space */
+}
+
+/* =========================
+   Toggle - Mobile Adjustments
+========================= */
+@media (max-width: 768px) {
+  .toggle-arrow {
+    font-size: 14px;      /* arrow size */
+    width: 25px;           /* square size */
+    height: 25px;          /* square size */
+    top: -10px;              /* adjust inside card */
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+ 
+  }}
+
+ /* =========================
+   Mobile Tabs Adjustment
+========================= */
+@media (max-width: 768px) {
+  .tracker-tabs {
+    display: flex;
+    flex-direction: row;      /* keep tabs inline */
+    justify-content: center;  /* center horizontally */
+    gap: 8px;                 /* spacing between buttons */
+    flex-wrap: wrap;          /* wrap if screen is too small */
+    margin: 0px 0 15px 0;
+  }
+
+  .tab-button {
+    flex: 1 1 auto;           /* let buttons share width equally */
+    font-size: 12px;          /* smaller text on mobile */
+    padding: 6px 10px;        /* smaller padding */
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .tab-button.active {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .focus-button{
+     font-size: 12px;
+    padding: 6px 10px;
+    gap: 8px;  
   }
 }
 

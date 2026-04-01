@@ -69,7 +69,8 @@ function displayInputtedInfo() {
   if (!displayDiv) return;
 
   displayDiv.innerHTML = `
-    <h2>Your Selections</h2>
+<span class="close-results" onclick="closeBox('displayInfo')">×</span>
+<h2>Your Selections</h2>
     <p><strong>Braid Size:</strong> ${formatLabel(quizAnswers.braidSize)}</p>
     <p><strong>Desired Braid Length:</strong> ${formatLabel(quizAnswers.braidLength)}</p>
     <p><strong>Natural Hair Length:</strong> ${formatLabel(quizAnswers.hairLength)}</p>
@@ -187,7 +188,8 @@ function calculateBraidEstimate() {
   if (!resultDiv) return;
 
   resultDiv.innerHTML = `
-    <h2>Results</h2>
+<span class="close-results" onclick="closeBox('calculationResult')">×</span>
+<h2>Results</h2>
     <p> <strong>Estimated Install Time:</strong> ${timeRange.min}–${timeRange.max} hours</p>
     <p> <strong>Recommended Hair Packs:</strong> ${packRange.min}–${packRange.max} packs</p>
     <p> <strong>Estimated Hair Cost:</strong> $${hairCostRange.min}–$${hairCostRange.max}</p>
@@ -213,4 +215,16 @@ function showResultsAndReflow() {
   document
     .querySelector(".card, .card2, .maincard")
     ?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function closeBox(id) {
+  const box = document.getElementById(id);
+  if (!box) return;
+
+  box.classList.remove("show-results");
+
+  // Optional: fade out cleanly
+  setTimeout(() => {
+    box.style.visibility = "hidden";
+  }, 200);
 }

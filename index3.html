@@ -24,7 +24,7 @@
       <!-- Growth Rate Selection -->
       <div class="questiondd">
         <label for="growthRate">How fast does your hair grow?</label>
-        <select id="growthRate" onchange="storeInput('growthRate', this.value)">
+        <select id="growthRate">
           <option value="0">-- Select growth rate --</option>
           <option value="0.125">Fast (0.5 in/month)</option>
           <option value="0.0875">Average (0.35 in/month)</option>
@@ -36,23 +36,107 @@
       <!-- Desired Growth Input -->
       <div class="question">
         <label for="desiredGrowth">How much new growth do you want before taking the style out?</label>
-       <div> <input id="desiredGrowth" placeholder="Enter amount in inches" type="number" step="0.01" onchange="storeInput('desiredGrowth', this.value)"> </div> 
+        <input id="desiredGrowth" placeholder="Enter amount in inches" type="number" step="0.01">
+      </div>
+      
+      <!-- Callout -->
+      <div id="scrollCallout" class="scroll-callout">
+      ⬇ Scroll down to see results ⬇
       </div>
 
-    
       <!-- Buttons -->
       <button class="focus-button" onclick="submitQuiz()">Calculate</button>
-      <a href="index5.html"><button class="start-over-button">Start Over</button></a>
+      <button id="opentracker" class="focus-button" style="margin-top:5px; display:block; margin-left:auto; margin-right:auto;" onclick="openTracker(false)">Track a Style</button>
+      <a href="index5.html" class="start-over-link">Start Over</a>
 
       <!-- Disclaimer -->
       <p class="disclaimer2"><strong>Disclaimer:</strong> This calculator provides estimates based on theoretical equations. Actual results may vary and should not be considered professional haircare advice.</p>
     </div>
 
-    <!-- Results Section -->
-    <div id="displayInfo2" class="display-info"></div>
-    <div id="calculationResult2" class="calculation-result"></div>
+    <!-- Results Section (only once!) -->
 
-  </div> 
+    <div id="displayInfo2" class="display-info" style="display:none;"></div>
+    <div id="calculationResult2" class="calculation-result" style="display:none;"></div>
+
+    <!-- Tracked Styles Section -->
+   <div id="trackedStylesSection" class="card card2 tracked-collapsed">
+  <div class="tracked-header">
+    <h1 id="trackedstylesheader">Tracked Styles</h1>
+    <button id="toggleTrackedCard" class="toggle-arrow" aria-label="Expand/Collapse">&#9660;</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tracker-tabs">
+    <button id="currentTabBtn" class="tab-button active" onclick="switchTrackerTab('current')">Current Styles</button>
+    <button id="historyTabBtn" class="tab-button" onclick="switchTrackerTab('history')">Style History</button>
+  </div>
+
+  <!-- Current Styles -->
+  <div id="currentStylesContainer">
+    <p class="directions">Styles currently being worn</p>
+    <div id="trackedStylesList"></div>
+  </div>
+
+  <!-- Style History -->
+  <div id="historyStylesContainer" style="display:none;">
+    <p class="directions">Completed styles you have taken down</p>
+    <div id="styleHistoryList"></div>
+  </div>
+</div>
+
+    <!-- Style Tracker Modal -->
+    <div id="trackerModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeTrackerCard()">&times;</span>
+        <h1 class="styleTracker"> Style Tracker</h1>
+        <p class="directions">Track how long you keep this style in and your growth progress</p>
+
+        <div class="question">
+          <label for="styleDescription">Style Description</label>
+          <input type="text" id="styleDescription" placeholder="E.g., box braids, twists, crochet">
+        </div>
+
+        <div class="question">
+          <label for="installDate">Install Date</label>
+          <input class="installDate" type="date" id="installDate">
+        </div>
+
+        <div class="question">
+          <label for="keepWeeks">Suggested Time to Keep Style </label>
+          <input type="number" id="keepWeeks" step="0.5" placeholder="weeks">
+        </div>
+
+        <div class="question">
+          <label for="styleImage">Upload Style Photo</label>
+          <small style="display:block;margin-bottom:6px;color:#6E9AC4;">Upload a photo already saved on your phone for best results</small>
+          <input type="file" id="styleImage" accept="image/*">
+        </div>
+
+        <button id="saveStyleBtn" class="focus-button" onclick="saveStyleToTracker()">Save Style</button>
+        <div id="trackerOutput" class="display-info"></div>
+      </div>
+    </div>
+
+    <div id="takedownModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeTakedownModal()">&times;</span>
+
+
+    <h1 class="styleTracker">Takedown Style</h1>
+    <p class="directions">Select the date you took this style down</p>
+
+    <div class="question">
+      <label for="takedownDateInput">Takedown Date</label>
+      <input type="date" id="takedownDateInput">
+    </div>
+
+    <button class="focus-button" onclick="confirmTakedownFromModal()">Confirm</button>
+
+  </div>
+</div>
+
+  </div> <!-- End calculator-wrapper -->
+  <button onclick="localStorage.clear(); location.reload();">Reset Data</button>
 
   <script src="script2.js"></script>
 </body>

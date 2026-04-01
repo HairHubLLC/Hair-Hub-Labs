@@ -27,6 +27,27 @@ h1,h3 { text-align:center; }
 input,select { width:100%; padding:8px; margin-bottom:10px; }
 button { margin-top:10px; padding:8px 14px; cursor:pointer; }
 .button-wrapper { display:flex; justify-content:center; gap:8px; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;     /* taller input box */
+  font-size: 15px;      /* larger text */
+  margin-bottom: 12px;    
+  border-radius: 8px;     /* optional: softer edges */
+  border: 1px solid #ccc; /* subtle border */
+  box-sizing: border-box;  /* ensures padding doesn't break width */
+}
+#photodisclaimer{
+   text-align: left; 
+   font-size: 10px;
+
+}
+#imageupload{
+  margin-top: 20px;
+
+}
+
+
 </style>
 </head>
 <body>
@@ -36,6 +57,7 @@ button { margin-top:10px; padding:8px 14px; cursor:pointer; }
      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="home-svg">
      <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z" />
      </svg>
+  
     </a>
     <h1 id="formTitle">Add New Product</h1>
     <form id="addProductForm">
@@ -81,13 +103,21 @@ button { margin-top:10px; padding:8px 14px; cursor:pointer; }
       </div>
 
       <input id="notes" placeholder="Notes: e.g., style done, paired products, cost, other observations.
-">
+    ">
+    <div id= "imageupload" class="question">
+      <label for="productImage">Upload Product Photo</label>
+      <small id="photodisclaimer" style="display:block;margin-bottom:6px;color:#6E9AC4;"> *Upload a photo already saved on your phone for best results</small>
+      <input type="file" id="productImage" accept="image/*">
+      
+    </div>
       <div class="button-wrapper">
         <button type="button" id="saveButton">Save Product</button>
         <a href="index7.html"><button type="button">Back</button></a>
       </div>
     </form>
   </div>
+
+  <button onclick="localStorage.clear(); location.reload();">Reset Data</button>
 </div>
 
 <script>
@@ -123,9 +153,10 @@ function getStarValue(name){
   const checked = document.querySelector(`input[name="${name}"]:checked`);
   return checked ? Number(checked.value) : null;
 }
-
 document.getElementById("saveButton").addEventListener("click", ()=>{
-  const productData = {
+  const file = document.getElementById("productImage").files?.[0];
+
+  const baseData = {
     name: document.getElementById("productName").value.trim(),
     brand: document.getElementById("productBrand").value.trim(),
     date: document.getElementById("entryDate").value,
@@ -138,24 +169,78 @@ document.getElementById("saveButton").addEventListener("click", ()=>{
     optional: { notes: document.getElementById("notes").value }
   };
 
-  if(Object.values(productData.ratings).includes(null)){
+  // ✅ NEW: Check that name and brand are filled
+  if (!baseData.name || !baseData.brand) {
+    alert("Please enter both the product name and brand.");
+    return; // stop execution if missing
+  }
+
+  // Existing ratings check
+  if(Object.values(baseData.ratings).includes(null)){
     alert("Please rate all categories.");
     return;
   }
 
+  // 👇 Preserve existing image if editing
+  let existingImage = null;
   if(numericEditIndex !== null){
-    // Update existing product in the array
-    products[numericEditIndex] = productData;
-  } else {
-    // Add new product
-    products.push(productData);
+    existingImage = products[numericEditIndex].image || null;
   }
 
-  saveProducts(products); // save updated array to localStorage
-  window.location.href = "index7.html"; // go back to main page
+  const saveFinalProduct = (imageBase64 = null) => {
+    const productData = {
+      ...baseData,
+      image: imageBase64 || existingImage  // 👈 KEY LINE
+    };
 
- 
+    if(numericEditIndex !== null){
+      products[numericEditIndex] = productData;
+    } else {
+      products.push(productData);
+    }
+
+    saveProducts(products);
+    window.location.href = "index7.html";
+  };
+
+  if(file){
+    resizeImage(file, 300, 300, (resized)=>{
+      saveFinalProduct(resized);
+    });
+  } else {
+    saveFinalProduct();
+  }
 });
+
+function resizeImage(file, maxWidth, maxHeight, callback) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = maxWidth;
+            canvas.height = maxHeight;
+
+            // Fill with white first
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, maxWidth, maxHeight);
+
+            // Center crop image
+            let size = Math.min(img.width, img.height);
+            const sx = (img.width - size) / 2;
+            const sy = (img.height - size) / 2;
+
+            ctx.drawImage(img, sx, sy, size, size, 0, 0, maxWidth, maxHeight);
+
+            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7);
+            callback(compressedBase64);
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
 
 
 </script>
